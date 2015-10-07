@@ -1,0 +1,30 @@
+{
+  "name": "free-lunch-crunch",
+  "version": "1.0.0",
+  "description": "A contest to crunch js code to the smallest codeset possible and still function.",
+  "main": "app.js",
+  "scripts": {
+    "test": "exit 0",
+    "start": "node $npm_package_main"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/n8io/free-lunch-crunch.git"
+  },
+  "keywords": [
+    "javascript",
+    "node.js"
+  ],
+  "author": "Nate Clark",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n8io/free-lunch-crunch/issues"
+  },
+  "homepage": "https://github.com/n8io/free-lunch-crunch",
+  "dependencies": {
+    "compression": "^1.6.0",
+    "express": "^4.13.3",
+    "express-minify": "^0.1.6",
+    "morgan": "^1.6.1"
+  }
+}
