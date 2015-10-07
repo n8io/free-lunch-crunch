@@ -5,7 +5,7 @@ Make this script smaller so you can get bigger.
 
 All,
 
-Attached you will find a script that we intend on using for pixel drops on the client. We believe we have optimized it a decent amount but wanted to open it up to anyone that is looking for a challenge.
+IN this repo you will find a script (raw.js) that we intend on using for pixel drops on the client. We believe we have optimized it a decent amount but wanted to open it up to anyone that is looking for a challenge.
 
 Given:
     1. Must be cross browser and working on IE6+. Reference [caniuse.com](http://caniuse.com) for compatibility.
