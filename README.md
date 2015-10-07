@@ -19,7 +19,7 @@ I am interested in seeing what all you brilliant minds can cook up.
 
 ## Getting started
 1. `npm install`
-2. `npm start'
+2. `npm start`
 3. Visit [http://localhost:3000/min.js](http://localhost:3000/min.js)
 
 ## Making changes
