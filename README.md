@@ -1,5 +1,5 @@
-# The ~763B script Challenge
-Make this script smaller so you can get bigger.
+# free-lunch-crunch
+**The 763B challenge**: Make this script smaller so you can get bigger.
 
 ![alt tag](https://raw.githubusercontent.com/n8io/free-lunch-crunch/master/crunched.png)
 
