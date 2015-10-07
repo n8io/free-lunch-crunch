@@ -8,12 +8,12 @@ All,
 In this repo you will find a script (raw.js) that we intend on using for pixel drops on the client. We believe we have optimized it a decent amount but wanted to open it up to anyone that is looking for a challenge.
 
 Given:
-    1. Must be cross browser and working on IE6+. Reference [caniuse.com](http://caniuse.com) for compatibility.
-    2. Speed of execution on the client is not a concern.
-    3. The functionality must remain the same (write 3 cookies and drop 4 hidden images onto the page).
+* Must be cross browser and working on IE6+. Reference [caniuse.com](http://caniuse.com) for compatibility.
+* Speed of execution on the client is not a concern.
+* The functionality must remain the same (write 3 cookies and drop 4 hidden images onto the page).
 
 Goal:
-    Make the minimized script as small as possible to save across the wire. The current minimized, gzipped code is ~763B as shown above.
+* Make the minimized script as small as possible to save across the wire. The current minimized, gzipped code is ~763B as shown above.
 
 I am interested in seeing what all you brilliant minds can cook up.
 
