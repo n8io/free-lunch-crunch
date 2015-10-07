@@ -1,4 +1,4 @@
-# free-lunch-crunch
+# The ~763B script Challenge
 Make this script smaller so you can get bigger.
 
 ![alt tag](https://raw.githubusercontent.com/n8io/free-lunch-crunch/master/crunched.png)
@@ -13,7 +13,7 @@ Given:
 * The functionality must remain the same (write 3 cookies and drop 4 hidden images onto the page).
 
 Goal:
-* Make the minimized script as small as possible to save across the wire. The current minimized, gzipped code is ~763B as shown above.
+* Make the minimized script as small as possible to save across the wire. The current minimized, gzipped code is **~763B** as shown above.
 
 I am interested in seeing what all you brilliant minds can cook up.
 
@@ -24,7 +24,7 @@ I am interested in seeing what all you brilliant minds can cook up.
 
 ## Making changes
 1. Edit raw.js as you see fit.
-2. Hit the `/min.js` endpoint and evaluate your Dev Tools to check the size.
+2. Hit the `/min.js` endpoint and check with your Dev Tools to check the size.
 3. Repeat.
 
 Submit your best attempts as pull requests. Good luck.
