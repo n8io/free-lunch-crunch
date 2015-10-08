@@ -27,42 +27,33 @@ setTimeout(function() {
 
   // ** drop zee pixels **
   if(pixels.length) {
-    // http://stackoverflow.com/questions/10730362/get-cookie-by-name#answer-21125098
-    var lpdiCookieValueRegex = RegExp(indexCookieName + '=([^;]+)');
-
     // Leverage regex on that bad boy to parse out the value eliminating the
     // need to loop. Goes as follows:
-    //  * document.cookie.match(lpdiCookieValueRegex)
+    //  * RegExp(indexCookieName + '=([^;]+)')
+    //      returns a regex to find the beginning for the cookie we're looking for
+    //      http://stackoverflow.com/questions/10730362/get-cookie-by-name#answer-21125098
+    //  * document.cookie.match(..)
     //      returns ["cookie=value", "value"] if a match is found, otherwise null (falsy)
-    //  * ((document.cookie.match(lpdiCookieValueRegex) || [])[1])
+    //  * ((...|| [])[1])
     //      return the second element of the match array, otherwise undefined (falsy)
-    //  * +((document.cookie.match(lpdiCookieValueRegex) || [])[1])
+    //  * +...
     //      returns integer representation of the match, othewise NaN (falsy)
-    //  * +((document.cookie.match(lpdiCookieValueRegex) || [])[1]) + 1)
-    //      returns the cookie value + 1, otherwise adding NaN + 1 which is NaN
-    //  * ~~(+((document.cookie.match(lpdiCookieValueRegex) || [])[1]) + 1)
-    //      returns the actual next index integer leveraging the double NOT bitwise operator
-    var nextDropIndex = ~~(+((document.cookie.match(lpdiCookieValueRegex) || [])[1]) + 1);
+    //  * ... + 1
+    //      returns the cookie value + 1, otherwise adding NaN + 1 = NaN
+    //  * ~~(...)
+    //      returns the next index integer leveraging the double NOT bitwise operator for integer casting, otherwise 0
+    var nextDropIndex = ~~(+((document.cookie.match(RegExp(indexCookieName + '=([^;]+)')) || [])[1]) + 1);
 
     // If the next drop index is smaller than the pixel array
     if(nextDropIndex < pixels.length) {
-      var lastIndexDropped;
-      var stopIndex = (nextDropIndex + maxDrops < pixels.length ? nextDropIndex + maxDrops : pixels.length) - 1;
-      var div = document.createElement('div');
-
-      div.style.display = 'none';
-
-      while(nextDropIndex <= stopIndex) {
+      while(nextDropIndex <= (nextDropIndex + maxDrops < pixels.length ? nextDropIndex + maxDrops : pixels.length) - 1) {
         var singlePixel = document.createElement('img');
 
         singlePixel.src = pixels[nextDropIndex];
-        div.appendChild(singlePixel);
-        lastIndexDropped = nextDropIndex++;
-      }
+        singlePixel.style.display = 'none';
 
-      document.body.appendChild(div);
-      // write the indexCookie
-      document.cookie = indexCookieName + '=' + lastIndexDropped;
+        document.cookie = indexCookieName + '=' + nextDropIndex++;
+      }
     }
   }
 });
