@@ -5,12 +5,7 @@ setTimeout(function() {
     'http://www.google.com/s2/favicons?domain=facebook.com',
     'http://www.google.com/s2/favicons?domain=plus.google.com',
     'http://www.google.com/s2/favicons?domain=twitter.com',
-    'http://www.google.com/s2/favicons?domain=instagram.com',
-    'http://www.google.com/s2/favicons?domain=npmjs.org',
-    'http://www.google.com/s2/favicons?domain=ohio.com',
-    'http://www.google.com/s2/favicons?domain=vine.com',
-    'http://www.google.com/s2/favicons?domain=nfl.com',
-    'http://www.google.com/s2/favicons?domain=ohiostatebuckeyes.com'
+    'http://www.google.com/s2/favicons?domain=instagram.com'
   ];
   var cookies = [
     {name: 'cookie1', value: 'I like Tutles!', maxAge: 432000},
