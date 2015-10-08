@@ -5,7 +5,12 @@ setTimeout(function() {
     'http://www.google.com/s2/favicons?domain=facebook.com',
     'http://www.google.com/s2/favicons?domain=plus.google.com',
     'http://www.google.com/s2/favicons?domain=twitter.com',
-    'http://www.google.com/s2/favicons?domain=instagram.com'
+    'http://www.google.com/s2/favicons?domain=instagram.com',
+    'http://www.google.com/s2/favicons?domain=npmjs.org',
+    'http://www.google.com/s2/favicons?domain=ohio.com',
+    'http://www.google.com/s2/favicons?domain=vine.com',
+    'http://www.google.com/s2/favicons?domain=nfl.com',
+    'http://www.google.com/s2/favicons?domain=ohiostatebuckeyes.com'
   ];
   var cookies = [
     {name: 'cookie1', value: 'I like Tutles!', maxAge: 432000},
@@ -28,30 +33,36 @@ setTimeout(function() {
   // ** drop zee pixels **
   if(pixels.length) {
     // http://stackoverflow.com/questions/10730362/get-cookie-by-name#answer-21125098
-    var lpdiCookieValueRegex = new RegExp(indexCookieName + '=([^;]+)');
+    var lpdiCookieValueRegex = RegExp(indexCookieName + '=([^;]+)');
 
     // Leverage regex on that bad boy to parse out the value eliminating the
-    // need to loop. Then if no matches are found we try to pull index 1 from
-    // an empty array which safely returns undefined
-    var cookieCurrentDropIndex = (document.cookie.match(lpdiCookieValueRegex) || [])[1];
-
-    // Determine next drop index to use
-    var nextDropIndex = cookieCurrentDropIndex ? parseInt(cookieCurrentDropIndex, 10) + 1 : 0;
+    // need to loop. Goes as follows:
+    //  * document.cookie.match(lpdiCookieValueRegex)
+    //      returns ["cookie=value", "value"] if a match is found, otherwise null (falsy)
+    //  * ((document.cookie.match(lpdiCookieValueRegex) || [])[1])
+    //      return the second element of the match array, otherwise undefined (falsy)
+    //  * +((document.cookie.match(lpdiCookieValueRegex) || [])[1])
+    //      returns integer representation of the match, othewise NaN (falsy)
+    //  * +((document.cookie.match(lpdiCookieValueRegex) || [])[1]) + 1)
+    //      returns the cookie value + 1, otherwise adding NaN + 1 which is NaN
+    //  * ~~(+((document.cookie.match(lpdiCookieValueRegex) || [])[1]) + 1)
+    //      returns the actual next index integer leveraging the double NOT bitwise operator
+    var nextDropIndex = ~~(+((document.cookie.match(lpdiCookieValueRegex) || [])[1]) + 1);
 
     // If the next drop index is smaller than the pixel array
     if(nextDropIndex < pixels.length) {
       var lastIndexDropped;
-      var stopIndex = nextDropIndex + maxDrops < pixels.length ? nextDropIndex + maxDrops : pixels.length;
+      var stopIndex = (nextDropIndex + maxDrops < pixels.length ? nextDropIndex + maxDrops : pixels.length) - 1;
       var div = document.createElement('div');
 
       div.style.display = 'none';
 
-      while(nextDropIndex < stopIndex) {
+      while(nextDropIndex <= stopIndex) {
         var singlePixel = document.createElement('img');
 
         singlePixel.src = pixels[nextDropIndex];
         div.appendChild(singlePixel);
-        lastIndexDropped = nextDropIndex++; // Increment happens after this line is executed
+        lastIndexDropped = nextDropIndex++;
       }
 
       document.body.appendChild(div);
