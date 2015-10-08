@@ -29,6 +29,7 @@ setTimeout(function() {
   if(pixels.length) {
     // Leverage regex on that bad boy to parse out the value eliminating the
     // need to loop. Goes as follows:
+    //  * Note when you see [...] in the info below, it is the shorthand for the code explained above it
     //  * RegExp(indexCookieName + '=([^;]+)')
     //      returns a regex to find the start of the cookie we're looking for
     //      http://stackoverflow.com/questions/10730362/get-cookie-by-name#answer-21125098
