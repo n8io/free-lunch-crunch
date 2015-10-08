@@ -48,11 +48,11 @@ setTimeout(function() {
     // If the next drop index is smaller than the pixel array
     if(nextDropIndex < pixels.length) {
       while(nextDropIndex <= (nextDropIndex + maxDrops < pixels.length ? nextDropIndex + maxDrops : pixels.length) - 1) {
-        var singlePixel = document.createElement('img');
-
-        singlePixel.src = pixels[nextDropIndex];
-        singlePixel.style.display = 'none';
-
+        // A couple things we are assuming here:
+        //  * The urls from the service have been cleaned, verified, and are trustingly encoded to be plugged in
+        //  * We don't need a div wrapper or any special identifier on the img
+        //  * Uris are to a natively sized 1px by 1px transparent png
+        document.body.innerHTML += '<img src="' + pixels[nextDropIndex] + '" style="visibility:hidden;" />';
         document.cookie = indexCookieName + '=' + nextDropIndex++;
       }
     }
