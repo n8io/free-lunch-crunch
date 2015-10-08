@@ -9,24 +9,30 @@ var port = process.env.PORT || 3000;
 var host = process.env.HOST || '0.0.0.0';
 
 app.use(compress());
+app.use('/', express.static('dist'));
 app.use(minify({
   js_match: /javascript/,
   cache: false
 }));
 app.use(morgan('dev'));
 
-app.get('/raw.js', function(req, res) {
-  var js = fs.readFileSync('./raw.js');
-  res._skip = true;
-  res.setHeader('Content-Type', 'application/javascript');
-  res.end(js);
-});
+var router = express.Router();
 
-app.get('/min.js', function(req, res) {
-  var js = fs.readFileSync('./raw.js');
-  res.setHeader('Content-Type', 'application/javascript');
-  res.end(js);
-});
+router
+  .get('/raw.js', function(req, res) {
+    var js = fs.readFileSync('./raw.js');
+    res._skip = true;
+    res.setHeader('Content-Type', 'application/javascript');
+    res.end(js);
+  })
+  .get('/min.js', function(req, res) {
+    var js = fs.readFileSync('./raw.js');
+    res.setHeader('Content-Type', 'application/javascript');
+    res.end(js);
+  })
+  ;
+
+app.use('/', router);
 
 var server = app.listen(port, host, function() {
   console.log('%s@%s listening at http://%s:%s',
