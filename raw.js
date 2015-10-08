@@ -1,72 +1,62 @@
-(function() {
-  // Make it async (non blocking)
-  setTimeout(function() {
-    // GIVEN INFORMATION
-    var pixels = [
-      'http://www.google.com/s2/favicons?domain=facebook.com',
-      'http://www.google.com/s2/favicons?domain=plus.google.com',
-      'http://www.google.com/s2/favicons?domain=twitter.com',
-      'http://www.google.com/s2/favicons?domain=isntagram.com'
-    ];
-    var cookies = [
-      {name: 'cookie1', value: 'I like Tutles!', maxAge: 432000},
-      {name: 'cookie2', value: 'I like money too, we should be friends.'}
-    ];
-    var indexCookieName = '_b9553c4_lpdi';
-    var maxDrops = 5;
-    // END GIVEN
+// setTimeout runs in its own isolate scope, no need for IIFE
+setTimeout(function() {
+  // GIVEN INFORMATION
+  var pixels = [
+    'http://www.google.com/s2/favicons?domain=facebook.com',
+    'http://www.google.com/s2/favicons?domain=plus.google.com',
+    'http://www.google.com/s2/favicons?domain=twitter.com',
+    'http://www.google.com/s2/favicons?domain=instagram.com'
+  ];
+  var cookies = [
+    {name: 'cookie1', value: 'I like Tutles!', maxAge: 432000},
+    {name: 'cookie2', value: 'I like money too, we should be friends.'}
+  ];
+  var indexCookieName = '_b9553c4_lpdi';
+  var maxDrops = 5;
+  // END GIVEN
 
-    var tempDocument = document;
-    var indexCookieNameEq = indexCookieName + '=';
-    var cookieArray = tempDocument.cookie.split(';');
-    var cookieCurrentDropIndex;
+  // ** set cookies **
+  if(cookies.length) {
+    var cookiesLen = cookies.length;
 
-    // ** set cookies **
-    if(cookies.length) {
-      for(var i = 0; i < cookies.length; i++) {
-        // write each cookie
-        tempDocument.cookie = cookies[i].name + '=' + cookies[i].value + ';max-age=' + cookies[i].maxAge;
-      }
+    while(cookiesLen--) {
+      // write each cookie
+      document.cookie = cookies[cookiesLen].name + '=' + cookies[cookiesLen].value + ';max-age=' + cookies[cookiesLen].maxAge;
     }
+  }
 
-    // ** drop zee pixels **
-    if(pixels.length) {
-      // find the indexCookie by name and set cookieCurrentDropIndex
-      for(var n = 0; n < cookieArray.length; n++) {
-        var cookie = cookieArray[n];
+  // ** drop zee pixels **
+  if(pixels.length) {
+    // http://stackoverflow.com/questions/10730362/get-cookie-by-name#answer-21125098
+    var lpdiCookieValueRegex = new RegExp(indexCookieName + '=([^;]+)');
 
-        while(cookie.charAt(0) === ' ') {
-          cookie = cookie.substring(1, cookie.length);
-        }
+    // Leverage regex on that bad boy to parse out the value eliminating the
+    // need to loop. Then if no matches are found we try to pull index 1 from
+    // an empty array which safely returns undefined
+    var cookieCurrentDropIndex = (document.cookie.match(lpdiCookieValueRegex) || [])[1];
 
-        if(cookie.indexOf(indexCookieNameEq) === 0) {
-          cookieCurrentDropIndex = cookie.substring(indexCookieNameEq.length, cookie.length);
-        }
+    // Determine next drop index to use
+    var nextDropIndex = cookieCurrentDropIndex ? parseInt(cookieCurrentDropIndex, 10) + 1 : 0;
+
+    // If the next drop index is smaller than the pixel array
+    if(nextDropIndex < pixels.length) {
+      var lastIndexDropped;
+      var stopIndex = nextDropIndex + maxDrops < pixels.length ? nextDropIndex + maxDrops : pixels.length;
+      var div = document.createElement('div');
+
+      div.style.display = 'none';
+
+      while(nextDropIndex < stopIndex) {
+        var singlePixel = document.createElement('img');
+
+        singlePixel.src = pixels[nextDropIndex];
+        div.appendChild(singlePixel);
+        lastIndexDropped = nextDropIndex++; // Increment happens after this line is executed
       }
 
-      // determine next drop index to use
-      var nextDropIndex = (cookieCurrentDropIndex && !isNaN(cookieCurrentDropIndex)) ? parseInt(cookieCurrentDropIndex, 10) + 1 : 0;
-
-      // if the next drop index is within the array
-      if(pixels.length > nextDropIndex) {
-        var lastIndexDropped = 0;
-        var stopIndex = nextDropIndex + maxDrops < pixels.length ? nextDropIndex + maxDrops : pixels.length;
-        var div = tempDocument.createElement('div');
-
-        div.style.display = 'none';
-
-        for(var m = nextDropIndex; m < stopIndex; m++) {
-          var singlePixel = tempDocument.createElement('img');
-
-          singlePixel.src = pixels[m];
-          div.appendChild(singlePixel);
-          lastIndexDropped = m;
-        }
-
-        document.body.appendChild(div);
-        // write the indexCookie
-        tempDocument.cookie = indexCookieName + '=' + lastIndexDropped;
-      }
+      document.body.appendChild(div);
+      // write the indexCookie
+      document.cookie = indexCookieName + '=' + lastIndexDropped;
     }
-  });
-})();
+  }
+});
