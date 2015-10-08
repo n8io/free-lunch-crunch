@@ -30,7 +30,7 @@ setTimeout(function() {
     // Leverage regex on that bad boy to parse out the value eliminating the
     // need to loop. Goes as follows:
     //  * RegExp(indexCookieName + '=([^;]+)')
-    //      returns a regex to find the beginning for the cookie we're looking for
+    //      returns a regex to find the start of the cookie we're looking for
     //      http://stackoverflow.com/questions/10730362/get-cookie-by-name#answer-21125098
     //  * document.cookie.match(..)
     //      returns ["cookie=value", "value"] if a match is found, otherwise null (falsy)
