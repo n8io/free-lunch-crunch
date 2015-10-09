@@ -5,8 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "exit 0",
-    "start": "node $npm_package_main",
-    "trim": "uglifyjs ./raw.js -o ./beautified.js && js-beautify ./beautified.js -o ./beautified.js"
+    "start": "gulp dev",
+    "trim": "uglifyjs ./client/js/raw.js -o ./dist/beautified.js && js-beautify ./dist/beautified.js -o ./dist/beautified.js",
+    "gulp": "gulp"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,20 @@
     "morgan": "^1.6.1"
   },
   "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-changed": "^1.3.0",
+    "gulp-debug": "^2.1.1",
+    "gulp-htmlmin": "^1.2.0",
+    "gulp-jade": "^1.1.0",
+    "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-sequence": "^0.4.1",
+    "gulp-uglify": "^1.4.1",
+    "gulp-util": "^3.0.6",
+    "gulp-watch": "^4.3.5",
     "js-beautify": "^1.5.10",
     "uglify-js": "^2.4.24"
   }

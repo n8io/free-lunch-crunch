@@ -15,10 +15,11 @@ setTimeout(function() {
   var maxDrops = 5;
   // END GIVEN
 
-  // ** set cookies **
-  if(cookies.length) {
-    var cookiesLen = cookies.length;
+  var pixelsLen = pixels.length;
+  var cookiesLen = cookies.length;
 
+  // ** set cookies **
+  if(cookiesLen) {
     while(cookiesLen--) {
       // write each cookie
       document.cookie = cookies[cookiesLen].name + '=' + cookies[cookiesLen].value + ';max-age=' + cookies[cookiesLen].maxAge;
@@ -26,7 +27,7 @@ setTimeout(function() {
   }
 
   // ** drop zee pixels **
-  if(pixels.length) {
+  if(pixelsLen) {
     // Leverage regex on that bad boy to parse out the value eliminating the
     // need to loop. Goes as follows:
     //  * Note when you see [...] in the info below, it is the shorthand for the code explained above it
@@ -46,8 +47,8 @@ setTimeout(function() {
     var nextDropIndex = ~~(+((document.cookie.match(RegExp(indexCookieName + '=([^;]+)')) || [])[1]) + 1);
 
     // If the next drop index is smaller than the pixel array
-    if(nextDropIndex < pixels.length) {
-      while(nextDropIndex <= (nextDropIndex + maxDrops < pixels.length ? nextDropIndex + maxDrops : pixels.length) - 1) {
+    if(nextDropIndex < pixelsLen) {
+      while(nextDropIndex <= (nextDropIndex + maxDrops < pixelsLen ? nextDropIndex + maxDrops : pixelsLen) - 1) {
         // A couple things we are assuming here:
         //  * The urls from the service have been cleaned, verified, and are trustingly encoded to be plugged in
         //  * We don't need a div wrapper or any special identifier on the img

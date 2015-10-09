@@ -1,32 +1,32 @@
 var fs = require('fs');
 var express = require('express');
 var minify = require('express-minify');
-var morgan = require('morgan');
+var logger = require('morgan');
 var compress = require('compression');
 var app = express();
 
 var port = process.env.PORT || 3000;
 var host = process.env.HOST || '0.0.0.0';
 
-app.use(compress());
-app.use('/', express.static('dist'));
+app.use(logger('dev'));
+app.use(compress({threshold: 0}));
+app.use('/', express.static(__dirname + '/dist'));
 app.use(minify({
   js_match: /javascript/,
   cache: false
 }));
-app.use(morgan('dev'));
 
 var router = express.Router();
 
 router
   .get('/raw.js', function(req, res) {
-    var js = fs.readFileSync('./raw.js');
+    var js = fs.readFileSync('./client/js/raw.js');
     res._skip = true;
     res.setHeader('Content-Type', 'application/javascript');
     res.end(js);
   })
   .get('/min.js', function(req, res) {
-    var js = fs.readFileSync('./raw.js');
+    var js = fs.readFileSync('./client/js/raw.js');
     res.setHeader('Content-Type', 'application/javascript');
     res.end(js);
   })
